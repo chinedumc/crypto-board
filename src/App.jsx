@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 
 import HomePage from "./pages/homePage";
-import {Routes, Route } from "react-router";
+import { Routes, Route } from "react-router";
+import Header from "./components/Header";
+import AboutPage from "./pages/aboutPage";
+import NotFoundPage from "./pages/notFoundPage";
 const API_URL = import.meta.env.VITE_API_URL;
 const App = () => {
 	const [coins, setCoins] = useState([]);
@@ -19,7 +22,7 @@ const App = () => {
 				);
 				if (!res.ok) throw new Error("Failed to fetch data");
 				const data = await res.json();
-				console.log(data);
+				// console.log(data);
 				setCoins(data);
 			} catch (err) {
 				setError(err.message);
@@ -48,12 +51,29 @@ const App = () => {
 	}, [limit]);
 
 	return (
-	
-			<Routes>
-				
-        <Route path='/' element={<HomePage coins={coins} filter={filter} setFilter={setFilter}/>}/>
-			</Routes>
-	
+    <>
+    <Header />
+		<Routes>
+			<Route
+				path="/"
+				element={
+					<HomePage
+						coins={coins}
+						filter={filter}
+						setFilter={setFilter}
+						limit={limit}
+						setLimit={setLimit}
+						sortBy={sortBy}
+						setSortBy={setSortBy}
+            loading={loading}
+            error={error}
+					/>
+				}
+			/>
+      <Route path="/about" element={<AboutPage />} />
+      <Route path="*" element={<NotFoundPage />} />
+		</Routes>
+    </>
 	);
 };
 
