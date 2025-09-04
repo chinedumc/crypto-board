@@ -5,6 +5,7 @@ import { Routes, Route } from "react-router";
 import Header from "./components/Header";
 import AboutPage from "./pages/aboutPage";
 import NotFoundPage from "./pages/notFoundPage";
+import CoinDetailsPage from "./pages/coin-detailsPage";
 const API_URL = import.meta.env.VITE_API_URL;
 const App = () => {
 	const [coins, setCoins] = useState([]);
@@ -51,29 +52,30 @@ const App = () => {
 	}, [limit]);
 
 	return (
-    <>
-    <Header />
-		<Routes>
-			<Route
-				path="/"
-				element={
-					<HomePage
-						coins={coins}
-						filter={filter}
-						setFilter={setFilter}
-						limit={limit}
-						setLimit={setLimit}
-						sortBy={sortBy}
-						setSortBy={setSortBy}
-            loading={loading}
-            error={error}
-					/>
-				}
-			/>
-      <Route path="/about" element={<AboutPage />} />
-      <Route path="*" element={<NotFoundPage />} />
-		</Routes>
-    </>
+		<>
+			<Header />
+			<Routes>
+				<Route
+					path="/"
+					element={
+						<HomePage
+							coins={coins}
+							filter={filter}
+							setFilter={setFilter}
+							limit={limit}
+							setLimit={setLimit}
+							sortBy={sortBy}
+							setSortBy={setSortBy}
+							loading={loading}
+							error={error}
+						/>
+					}
+				/>
+				<Route path="/about" element={<AboutPage />} />
+				<Route path="/coin/:id" element={<CoinDetailsPage />} />
+				<Route path="*" element={<NotFoundPage />} />
+			</Routes>
+		</>
 	);
 };
 
